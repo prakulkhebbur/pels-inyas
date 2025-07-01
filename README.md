@@ -6,9 +6,13 @@
 
 - ✅ Add new participants
 - ✏️ Edit existing participant information
-- 🔒 Secure database operations with prepared statements
+- �️ Soft delete participants (maintains data integrity)
+- 📊 Modern dashboard with real-time statistics
+- �🔒 Secure database operations with prepared statements
 - 🌍 Environment-based configuration
 - 📡 RESTful API responses with proper HTTP status codes
+- 📤 Export participants to CSV
+- 🎨 Responsive and modern UI design
 
 ## 🚀 Quick Start
 
@@ -53,6 +57,7 @@
        name VARCHAR(255) NOT NULL,
        email VARCHAR(255) NOT NULL UNIQUE,
        role VARCHAR(100) NOT NULL,
+       status ENUM('active', 'inactive') DEFAULT 'active',
        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
    );
@@ -83,6 +88,18 @@ Send a POST request to `app.php` with the following data:
     "role": "Organizer"
 }
 ```
+
+### Deleting a Participant (Soft Delete)
+
+Send a POST request to `display.php` with the following data:
+```json
+{
+    "delete_participant": true,
+    "participant_id": 1
+}
+```
+
+**Note:** This performs a soft delete by setting the participant's status to 'inactive' rather than physically removing the record.
 
 ## 🔧 API Response Codes
 
