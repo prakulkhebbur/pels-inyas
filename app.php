@@ -23,9 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
         $stmt->bind_param("sssi", $_POST["name"], $_POST["email"], $_POST["role"], $participant_id);
         
         if ($stmt->execute()) {
+            http_response_code(200);
             echo("Participant updated successfully");
         } else {
-            echo("Error updating participant");
+            http_response_code(500);
+            echo("Error updating participant: " . $stmt->error);
         }
         
         $stmt->close();
@@ -40,9 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
         $stmt->bind_param("sss", $_POST["name"], $_POST["email"], $_POST["role"]);
         
         if ($stmt->execute()) {
+            http_response_code(200);
             echo("Database connected successfully");
         } else {
-            echo("Error adding participant");
+            http_response_code(500);
+            echo("Error adding participant: " . $stmt->error);
         }
         
         $stmt->close();
