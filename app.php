@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
     $connection = mysqli_connect($_ENV["DBHOST"], $_ENV["DBUSER"], $_ENV["DBPASS"], $_ENV["DBNAME"]);
     
     if (!$connection) {
+        http_response_code(500);
         echo("Database connection failed: " . mysqli_connect_error());
         exit;
     }
@@ -51,8 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
         
         $stmt->close();
     }
-    
+    else{
+        http_response_code(400);
+    }
     mysqli_close($connection);
+}
+else {
+    http_response_code(405);
 }
 
 
